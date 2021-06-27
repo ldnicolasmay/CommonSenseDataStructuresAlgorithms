@@ -11,13 +11,23 @@ class MyArray(object):
     def __str__(self):
         return "(" + ", ".join(self.array) + ")"
 
+    @staticmethod
+    def _raise_index_error(index, max_index_type):
+        base = "Index must be"
+        if index < 0:
+            raise IndexError(base + " greater than 0")
+        elif max_index_type == "lt":
+            raise IndexError(base + " less than array length")
+        elif max_index_type == "lte":
+            raise IndexError(base + " less than or equal to length")
+        else:
+            raise IndexError()
+
     def read(self, index: int) -> Any:
         if 0 <= index < len(self.array):
             return self.array[index]
-        elif index < 0:
-            raise IndexError("index must be greater than 0")
         else:
-            raise IndexError("index must be less than or equal to array length")
+            self._raise_index_error(index=index, max_index_type="lt")
 
     def search(self, item: Any) -> int:
         for index, it in enumerate(self.array):
@@ -26,19 +36,15 @@ class MyArray(object):
         else:
             return -1
 
-    def insert(self, item: Any, index: int):
+    def insert(self, item: Any, index: int) -> None:
         if 0 <= index <= len(self.array):
             self.array = self.array[:index] + [item] + self.array[index:]
-        elif index < 0:
-            raise IndexError("index must be greater than 0")
         else:
-            raise IndexError("index must be less than or equal to array length")
+            self._raise_index_error(index, max_index_type="lte")
 
     def delete(self, index: int):
         if 0 <= index < len(self.array):
             self.array = self.array[:index] + self.array[(index + 1):]
-        elif index < 0:
-            raise IndexError("index must be greater than 0")
         else:
-            raise IndexError("index must be less than array length")
+            self._raise_index_error(index, max_index_type="lt")
 

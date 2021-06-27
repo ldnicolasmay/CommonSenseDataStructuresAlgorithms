@@ -18,6 +18,8 @@ def run():
     print(produce_array.read(0))
     print("Read at index 1:", end=" ")
     print(produce_array.read(1))
+    # print("Read at index -2:", end=" ")
+    # print(produce_array.read(-2))
     # print("Read at index 5:", end=" ")
     # print(produce_array.read(5))
     
